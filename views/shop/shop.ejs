@@ -1,0 +1,93 @@
+<% include ../partials/header %>
+<style>
+/* shop.css */
+*{
+    margin: 0;
+    padding: 0;
+}
+    #shop table{
+        width: 100%;
+        border-collapse: collapse;
+        table-layout:auto;
+        white-space: wrap;
+        border: 2px solid black;
+    }
+    #shop table img{
+        width:70px;
+    }
+    #shop table td{
+        padding: 15px;
+        border: 0.5px solid rgb(88, 82, 82);
+    }
+    #shop table td:nth-child(3){
+        width: 20%;
+        text-align: center;
+    
+    }   
+    /* #shop table td:nth-child(1),
+    #shop table td:nth-child(2),
+    #shop table td:nth-child(4),
+    #shop table td:nth-child(5),
+    #shop table td:nth-child(6){
+        width: 350%;
+        text-align: center;
+    } */
+    /* #shop table td:nth-child(5) input{
+        width:70px ;
+        padding: 10px 5px 10px 15px;
+    } */
+    #shop table thead{
+        border: 1px solid black;
+        border-left: none;
+        border-right: none;  
+    }
+    #shop table thead{
+        font-weight: 700;
+        text-transform:uppercase ;
+        font-size: 13px;
+        padding: 18px 0;
+    }
+    #shop table tbody tr td{
+        padding-top: 15px;
+    }
+    
+    input{
+        padding: 10px;
+    }
+    </style>
+    <br><br>   
+<h1>Shop <button>Add Product</button> <button>Remove Product</button></h1> 
+<section id='shop'>
+<table style="width: 100%;"> 
+<thead>
+  <tr>
+    <td>Id</td>
+    <td>name</td>
+    <td>Image</td>
+    <td>Price</td>
+    <td>Size</td>
+    <td>Category</td>
+    <td>Quantity</td>
+    <td>Add button</td>
+  </tr>
+</thead>
+<tbody>
+    <% //product.map(product =>(  %> 
+  <tr>
+    <td><a href="">product.id</a></td>
+    <td><a href="">product.name</a></td>
+    <td><img src="product.img" alt="" /></td>
+    <td><a href="">product.price</a></td>
+    <td><input type="number" value=""/></td>
+    <td><a href="">product.category</a></td>
+    <td><input type="number" value=""/></td>
+    <td><button>Add to Cart</button> <button>Edit</button></td>
+  </tr>
+  <!-- <% //)) %>  -->
+</tbody>
+</table>
+</section>
+
+<footer className='section-p1'>...
+
+</footer>

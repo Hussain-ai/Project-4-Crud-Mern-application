@@ -1,0 +1,33 @@
+ <% include partials/header %>
+ <style>
+table{
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+td {
+  text-align: left;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+ </style>
+    <h1>index page</h1>
+    <container class="grid">
+    <%blogs.forEach((blog)=> {%>
+        <div>
+            <table style="border:2px solid black;">
+            <tr>
+            <td><h2><%=blog.title%></h2><div style="font-size: 20px;"><%=blog.author%></div></td>
+            <td><a href="/blogs/<%=blog._id%>"><img style="max-width:200px;" src="<%=blog.image%>"></a></a></td>    
+            <td style="font-size: 20px;"><span><strong>Description: </strong><%=blog.body.substring(0, 2000)%></span>
+            <a style="border: 1px solid red; ;" href='/blogs/<%=blog._id%>'>Read more</a></td>
+        </tr>
+            </table>
+        </div>
+   <% })%>
+</container>
+<% include partials/underground%>
+
+

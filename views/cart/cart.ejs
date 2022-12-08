@@ -1,0 +1,111 @@
+<% include ../partials/header %>
+<style>
+/* cart.css */
+#cart table{
+    width: 100%;
+    border-collapse: collapse;
+    table-layout:auto;
+    white-space: wrap;
+    border: 2px solid black;
+}
+#cart table img{
+    width:70px;
+}
+#cart table td{
+    padding: 15px;
+    border: 0.5px solid rgb(88, 82, 82);
+}
+#cart table td:nth-child(3){
+    width: 20%;
+    text-align: center;
+
+}   
+/* #cart table td:nth-child(1),
+#cart table td:nth-child(2),
+#cart table td:nth-child(4),
+#cart table td:nth-child(5),
+#cart table td:nth-child(6){
+    width: 350%;
+    text-align: center;
+} */
+/* #cart table td:nth-child(5) input{
+    width:70px ;
+    padding: 10px 5px 10px 15px;
+} */
+#cart table thead{
+    border: 1px solid black;
+    border-left: none;
+    border-right: none;  
+}
+#cart table thead{
+    font-weight: 700;
+    text-transform:uppercase ;
+    font-size: 13px;
+    padding: 18px 0;
+}
+#cart table tbody tr td{
+    padding-top: 15px;
+}
+
+#subtotal table{
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 20%;
+    margin-bottom: 20px;
+
+    border: 1px solid grey;
+}
+</style>
+<h1>Cart</h1>
+<section id='cart'>
+<table style="width:100% ;"> 
+<thead>
+  <tr>
+    <td>Id</td>
+    <td>name</td>
+    <td>Image</td>
+    <td>Size</td>
+    <td>Category</td>
+    <td>Price</td>
+    <td>Quantity</td>
+  </tr>
+</thead>
+<tbody>
+  {/* amount of products are added by customer in shop page */}
+  <tr>
+    <td><a href="">cart.id</a></td>
+    <td><a href="">cart.name</a></td>
+    <td><img src="cart.img" alt="" /></td>
+    <td><a href="">cart.size</a></td>
+    <td><a href="">cart.category</a></td>
+    <td><a href="">cart.price</a></td>
+    <td>cart.quantity</td>
+  </tr>
+  {/* }) */}
+  <tr>
+    <td><a href="">cart.id</a></td>
+    <td><a href="">cart.name</a></td>
+    <td><img src="cart.img" alt="" /></td>
+    <td><a href="">cart.size</a></td>
+    <td><a href="">cart.category</a></td>
+    <td><a href="">cart.price</a></td>
+    <td>cart.quantity</td>
+  </tr></tbody>
+</table>
+</section>
+<section id='subtotal'>
+  <table>
+    <tr>
+      <td>Cart Subtotal</td>
+      <td>price.sum</td>
+    </tr>
+    <tr>
+      <td>Shipping</td>
+      <td>5$</td>
+    </tr>
+    <tr>
+      <td><strong>Total</strong></td>
+      <td><strong>price.total</strong></td>
+    </tr>
+  </table>
+</section>

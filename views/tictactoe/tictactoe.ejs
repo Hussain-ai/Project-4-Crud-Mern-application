@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" 
+    content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script defer src="script.js"></script>
+    <title>Tic-Tac-Toe</title>
+</head>
+<% include ../partials/header %>
+<body>
+    <style>
+        *{
+    padding: 0;
+    margin: 0;
+    font-family: 'Itim', cursive;
+}
+.title {
+    color: black;
+    text-align: center;
+    font-size: 40px;
+    margin-top: 10%;
+}
+.player{
+    text-align: center;
+}
+.background {
+    background-color: linen;
+    height:100vh;
+    padding-top: 1px;
+}
+.display{
+text-align: center;
+font-size: 24px;
+}
+#container{
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    width: 225px;
+    margin: auto;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    font-family: "Permanent Marker", cursive;
+}
+
+.tile{
+    text-align: center;
+    width: 75px;
+    height: 75px;
+    border: 2px solid;
+    box-shadow: 0 0 0 2px;
+    line-height: 75px;
+    font-size: 50px;
+    cursor: pointer;
+}
+#status{
+    text-align: center;
+}
+#reset{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+    font-size: 20px;
+}
+.reset-mid{
+ align-items: center; 
+ padding-left: 47%; 
+}
+    </style>
+    <!-- Step 1 create background "main" tag covering whole body -->
+    <main class="background">
+        <!-- Step 2 Create section for the header/title and display-player -->
+        <div class="title">
+            <h1>Tic-Tac-Toe</h1></div>
+            <p class="display">Player: <h2 id="status"></h2></p>
+        <!-- Step 3 Create section & div for the 9 tiles and class them -->
+        <div id="container">
+            <div tileIndex='0' class="tile"></div>
+            <div tileIndex='1' class="tile"></div>
+            <div tileIndex='2' class="tile"></div>
+            <div tileIndex='3' class="tile"></div>
+            <div tileIndex='4' class="tile"></div>
+            <div tileIndex='5' class="tile"></div>
+            <div tileIndex='6' class="tile"></div>
+            <div tileIndex='7' class="tile"></div>
+            <div tileIndex='8' class="tile"></div>
+        </div>
+        <!-- Step 4 Create section for the win announcer and class it -->
+
+        <!-- Step 5 Create section & button to Reset the program -->
+            <div class="reset-mid"><button id="reset">Reset</button></div>
+    </main>
+    <script>
+        //allocate variables for the html tags
+//allocate variable for tile
+const tile = document.querySelectorAll('.tile');
+//allocate variable for reset 
+const resetBtn = document.querySelector('#reset');
+//allocate variable for status
+const statusText = document.querySelector('#status');
+//create winningCondition for the board
+const winningCondition = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+];
+//sets the board
+let board = ['', '', '', '', '', '', '', '', '']
+//sets the string for current player
+let currentPlayer = 'X'
+//sets boalean to check if the game is still running
+let active = false;
+startGame()
+//Below we set the functions
+//this function to start the game
+function startGame(){
+    tile.forEach(tile=>tile.addEventListener('click', tileClicked))
+    resetBtn.addEventListener('click', resetGame)
+    //below will change the announcer
+    statusText.textContent = `${currentPlayer}'s turn`;
+    active = true;
+}
+//this function to make a tile active from a click
+function tileClicked(){
+    const tileIndex = this.getAttribute("tileIndex");
+
+    if(board[tileIndex] != "" || !active){
+        return;
+}
+
+updateTile(this, tileIndex);
+checkWinner();
+}
+//function to update the tiles
+function updateTile(tile,index){
+    board[index] = currentPlayer
+    tile.textContent = currentPlayer
+}
+//function to change players turn
+function playerChange(){
+    currentPlayer = (currentPlayer == "X") ? "O" : "X"
+    statusText.textContent = `${currentPlayer}'s turn`
+}
+//function to check winner (most Important part)
+function checkWinner(){
+    let roundWon = false
+
+    for(let i = 0; i < winningCondition.length; i++){
+        //variables below state the position of the tiles 0,1,2 
+        //(can also be used for the other positions becuase it is connected with the condition in a loop)
+        const condition = winningCondition[i];
+        const tileA = board[condition[0]];
+        const tileB = board[condition[1]];
+        const tileC = board[condition[2]];
+        //checks if each tile is empty then it continues
+        if(tileA == "" || tileB == "" || tileC == ""){
+            continue;
+        }
+        //checks if all tiles beside each other are equal or the same then gives winning
+        if(tileA == tileB && tileB == tileC){
+            roundWon = true;
+            break
+        }
+    }
+    //checks if the condition roundwon is true then it gives the status of winning player and stops the game
+    if(roundWon){
+        statusText.textContent = `${currentPlayer} wins!`
+        active = false;
+    }
+    //checks if board does not include an empty tile then it gives the status of draw and stops the game
+    else if(!board.includes("")){
+        statusText.textContent = `Draw!`
+        active = false
+    }
+    //if none of the above conditions are met, if prompts the playchange function that switches the players turn
+    else{
+        playerChange()
+    }
+}
+//function to restart game by making all tiles empty on board and makes current player x with status change and activates the game again
+    function resetGame(){
+        currentPlayer = "X";
+        board = ["", "", "", "", "", "", "", "", ""];
+        statusText.textContent = `${currentPlayer}'s turn`
+        tile.forEach(tile => tile.textContent = "")
+        active = true
+}
+
+    </script>
+</body>
+</html>
+</body>
+</html>
