@@ -1,0 +1,12 @@
+.jumbotron {
+    background-image: url('../../assets/blog-index.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.mb-3 {
+    margin: auto;
+    padding: 0;
+}
+.btn {
+    margin: 10px;
+}

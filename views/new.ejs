@@ -10,24 +10,24 @@
 <body>
     <div class="ui main text container segment">
         <div class="ui huge header"> New Book Blog</div>
-          <form action="/blogs" method="POST" class="ui form">
+          <form action="/bookblogs" method="POST" class="ui form">
             <div class="field">
                 <label> Title: </label>
-                <input type="text" name="blog[title]" placeholder="title">
+                <input type="text" name="bookblog[title]" placeholder="title">
             </div>
 
             <div class="field">
                     <label> Image: </label>
-                    <input type="text" name="blog[image]" placeholder="image">
+                    <input type="text" name="bookblog[image]" placeholder="image">
              </div>
 
              <div class="field">
                 <label> Author: </label>
-                <input type="text" name="blog[author]" placeholder="author">
+                <input type="text" name="bookblog[author]" placeholder="author">
          </div>
              <div class="field">
                     <label> Description: </label>
-                    <textarea name="blog[body]"></textarea>
+                    <textarea name="bookblog[body]"></textarea>
              </div>
              <input type="submit" class="ui violet basic button">
           </form>

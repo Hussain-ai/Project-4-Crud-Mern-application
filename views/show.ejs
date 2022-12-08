@@ -1,4 +1,54 @@
 <% include partials/header %>
+<style>
+    .container
+{
+    width: 600px;
+    border: 2px solid #333;
+    padding: 15px 10px;
+}
+.container h2
+{
+    text-align: center;
+    margin-bottom: 15px
+}
+textarea
+{
+    height: 20px;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #aaa;
+    background-color: transparent;
+    margin-bottom: 10px;
+    resize: none;
+    outline: none;
+    transition: .5s
+}
+
+input[type="submit"], button
+{
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+}
+input[type="submit"]
+{
+    color: #fff;
+    background-color: #273c75
+}
+button
+{
+    color: #333;
+    background-color: transparent
+}
+.btn
+{
+    display: none
+}
+</style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,29 +59,63 @@
 </head>
 <body>
     <div class="ui main text container segment">
-        <div class="ui huge header"><%=blog.title%></div>
+        <div class="ui huge header"><%=bookblog.title%></div>
             <div class='ui top attached segment'>
             <div class=item>
-               <img class='ui centered rounded image' src="<%=blog.image%>">
+               <img class='ui centered rounded image' src="<%=bookblog.image%>">
             </div>
             <div class='content'>
-               <span>Created: <%=blog.created.toDateString()%></span>
+               <span>Created: <%=bookblog.created.toDateString()%></span>
             </div>
             </div>
             <div class='author'>
-                <p>Author: <%-blog.author%></p>
+                <p>Author: <%-bookblog.author%></p>
                 </div>
             <div class='description'>
-            <p>Description: <%-blog.body%></p>
+            <p>Description: <%-bookblog.body%></p>
             </div>
            
-            <a href='/blogs/<%=blog._id%>/edit' class='ui basic red button'>Edit</a>
+            <a href='/bookblogs/<%=bookblog._id%>/edit' class='ui basic red button'>Edit</a>
 
-           <form id ='delete' action='/blogs/<%=blog._id%>?_method=DELETE' method='POST'>
+           <form id ='delete' action='/bookblogs/<%=bookblog._id%>?_method=DELETE' method='POST'>
                 <button class='ui red basic button' >Delete</button>
            </form>
             
+           <div class="container">
+            <h2>Leave a Comment</h2>
+            <form>
+             <textarea placeholder='Add Your Comment'></textarea>
+              <div class="btn">
+                <input type="submit" value='Comment'>
+                <button id='clear' href='#'>Cancel</button>
+              </div>
+            </form>
+          </div>
+          
          
     </div>
 </body>
 </html>
+
+<script>
+    var feild = document.querySelector('textarea');
+var backUp = feild.getAttribute('placeholder');
+var btn = document.querySelector('.btn');
+var clear = document.getElementById('clear')
+
+feild.onfocus = function(){
+    this.setAttribute('placeholder', '');
+    this.style.borderColor = '#333';
+    btn.style.display = 'block'
+}
+
+feild.onblur = function(){
+    this.setAttribute('placeholder',backUp);
+    this.style.borderColor = '#aaa'
+}
+
+clear.onclick = function(){
+    btn.style.display = 'none';
+    feild.value = '';
+}
+</script>

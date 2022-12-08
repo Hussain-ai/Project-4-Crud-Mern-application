@@ -1,0 +1,43 @@
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+	<a class="navbar-brand" href="/">Blogify</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+		aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/blogs">Explore</a>
+			</li>
+		</ul>
+		<% if(!currentUser) {%> 
+			<a href="/login" class="btn btn-sm auth-control">Login</a>
+			<a href="/register" class="btn btn-sm auth-control">Register</a>
+		<% }else{ %> 
+			<a href="/logout" class="btn btn-sm auth-control">Logout</a>
+		<% } %> 
+		<a class="btn btn-success btn-sm" href="/blogs/new">
+			Add Post
+		</a>
+	</div>
+</nav>
+<body>
+<% if(errorMessage!='') {%> 
+<div class="container">
+	<div class="alert alert-danger" role="alert">
+		<%= errorMessage %> 
+	</div>
+</div>
+<% } %> 
+<% if(successMessage!='') {%> 
+<div class="container">
+	<div class="alert alert-success" role="alert">
+		<%= successMessage %> 
+	</div>
+</div>
+<% } %> 

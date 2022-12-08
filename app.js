@@ -1,35 +1,65 @@
 const express = require('express');
+const app = express();
 const mongoose = require('mongoose');
-const ejsLayouts = require('express-ejs-layouts')
-const cookieParser = require('cookie-parser')
+const passport = require('passport');
+const User = require('./models/user');
+const flash = require('connect-flash');
 const bodyParser = require('body-parser');
+const blogRoutes = require('./routes/blogs');
+const indexRoutes = require('./routes/index');
+const LocalStrategy = require('passport-local');
+const ExpressSession = require('express-session');
 const methodOverride = require('method-override');
+const commentRoutes = require('./routes/comments');
 const expressSanitizer = require('express-sanitizer')
 require('dotenv').config()
 
-
-const app = express();
-
 //CONECTING DB// APP CONFI
-mongoose.connect('mongodb+srv://Hussain:hussain@cluster0.rk6qjyn.mongodb.net/blogwebsite?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://Hussain:hussain@cluster0.rk6qjyn.mongodb.net/bookblogwebsite?retryWrites=true&w=majority', {
     useNewUrlParser: true, 
     useCreateIndex: true,
     useFindAndModify: false
   });
 
+//passport setup
+app.use(
+  ExpressSession({
+      secret: 'This is the bookblogify app',
+      resave: false,
+      saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 //middleware
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(expressSanitizer());
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'));
 app.use(express.static('public'));
 app.use(methodOverride('_method'))
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    res.locals.errorMessage = req.flash('error');
+    res.locals.successMessage = req.flash('success');
+    next();
+});
 
 // express.static(root, [options])
 const path = require('path')
 app.use( express.static(path.join(__dirname, 'public')))
 
+app.listen(3500, (req, res) => {
+  console.log('The server is up and running on port 3500')
+});
+
 //SCHEMA
-let blogSchema = mongoose.Schema({
+let bookblogSchema = mongoose.Schema({
     title: String,
     image: {
         type: String,
@@ -45,19 +75,11 @@ let blogSchema = mongoose.Schema({
 
 //MODEL
 
-let Blog = mongoose.model('Blog', blogSchema)
-
-//SAMPLE BLOG
-// Blog.create({
-//     title: 'My first Academy',
-//     image: 'https://images.unsplash.com/photo-1551517725-b926592c4280?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-//     body: 'Hello this is a blog post'
-// })
-
+let BookBlog = mongoose.model('BookBlog', bookblogSchema)
 
 //RESTFUL ROUTES
 app.get('/', (req, res) => {
-    res.redirect('/blogs')
+    res.redirect('/bookblogs')
 })
 
 //below are new routes
@@ -94,83 +116,84 @@ app.get('/aboutus', (req, res) => {
 
 //INDEX ROUTES
 
-app.get('/blogs', (req, res) => {
+app.get('/bookblogs', (req, res) => {
     //RETRIEVING ALL BLOGS
-    Blog.find({}, (error, blogs) => {
+    BookBlog.find({}, (error, bookblogs) => {
       if(error){
           console.log(error);
       }else{
-        res.render('index', {blogs: blogs})
+        res.render('index', {bookblogs: bookblogs})
       }
     })
 })
 
 //NEW ROUTE
-app.get('/blogs/new', (req, res) => {
+app.get('/bookblogs/new', (req, res) => {
     res.render('new.ejs')
 })
 
 
 //CREATE
-app.post('/blogs', (req, res) => {
-    //create blog
-    Blog.create(req.body.blog, (error, newBlog) => {
+app.post('/bookblogs', (req, res) => {
+    //create bookblog
+    BookBlog.create(req.body.bookblog, (error, newBookBlog) => {
       if(error){
           res.render('new')
       }else{
            //redirect to index page
-          res.redirect('/blogs')
+          res.redirect('/bookblogs')
       }
-    })
-   
+    }) 
 })
-//SHOW ROUTE
-app.get('/blogs/:id', (req, res) => {
-    Blog.findById(req.params.id, (error, foundBlog) => {
+
+//ShOW ROUTE
+app.get('/bookblogs/:id', (req, res) => {
+    BookBlog.findById(req.params.id, (error, foundBookBlog) => {
       if(error){
-        res.redirect('/blogs')
+        res.redirect('/bookblogs')
       }else{
-        res.render('show', {blog:foundBlog})
+        res.render('show', {bookblog:foundBookBlog})
       }
     })
 });
 
 //EDIT
-app.get('/blogs/:id/edit', (req, res) => {
-  Blog.findById(req.params.id, (error, foundBlog)=>{
+app.get('/bookblogs/:id/edit', (req, res) => {
+  BookBlog.findById(req.params.id, (error, foundBookBlog)=>{
     if(error){
-      res.redirect('/blogs')
+      res.redirect('/bookblogs')
     }else {
-      res.render('edit', {blog:foundBlog})
+      res.render('edit', {bookblog:foundBookBlog})
     }
   })
 });
 
+
 //UPDATE ROUTE
-app.put('/blogs/:id', (req, res) => {
-  Blog.findByIdAndUpdate(req.params.id, req.body.blog, (error, updatedBlog)=> {
+app.put('/bookblogs/:id', (req, res) => {
+  BookBlog.findByIdAndUpdate(req.params.id, req.body.bookblog, (error, updatedBookBlog)=> {
     if(error) {
-      res.redirect('/blogs')
+      res.redirect('/bookblogs')
     }else{
-      res.redirect('/blogs/' + req.params.id)
+      res.redirect('/bookblogs/' + req.params.id)
     }
   })
 });
 
 
 //DELETE ROUTE
-app.delete('/blogs/:id', (req, res) =>{
+app.delete('/bookblogs/:id', (req, res) =>{
   //DESTROY BLOG
-  Blog.findByIdAndRemove(req.params.id, (error)=> {
+  BookBlog.findByIdAndRemove(req.params.id, (error)=> {
     if(error){
-      res.redirect('/blogs')
+      res.redirect('/bookblogs')
     }else{
-      res.redirect('/blogs')
+      res.redirect('/bookblogs')
     }
   })
 });
 
-
-app.listen(3500, (req, res) => {
-  console.log('The server is up and running on port 3500')
-});
+//routes for General bookblogs
+app.use('/blogs', blogRoutes);
+app.use('/blogs/:id/comments', commentRoutes);
+app.use('', indexRoutes);

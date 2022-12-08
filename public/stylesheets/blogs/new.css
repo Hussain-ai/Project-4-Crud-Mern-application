@@ -1,0 +1,7 @@
+body {
+    padding: 60px 10px;
+}
+
+textarea.form-control {
+    height: 15rem;
+}

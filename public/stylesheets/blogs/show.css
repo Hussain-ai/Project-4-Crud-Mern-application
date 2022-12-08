@@ -1,0 +1,15 @@
+.container-fluid {
+    margin: 0;
+    padding: 20px 60px;
+}
+.col-9 {
+    padding: 20px;
+    background-color: #f7f7f7;
+    box-shadow: 2px 2px black;
+}
+.col-9 strong {
+    font-size: 1.1rem;
+}
+form {
+    display: inline;
+}

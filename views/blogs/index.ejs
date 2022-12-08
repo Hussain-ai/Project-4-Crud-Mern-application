@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/stylesheets/blogs/index.css" />
+<div class="jumbotron d-flex align-items-center justify-content-center">
+    <h1>
+        <a class="btn btn-success btn-sm" href="/blogs/new">
+			Add Post
+		</a>
+    </h1>
+</div>
+<div class="container">
+    <% data.forEach((item)=>{ %>
+    <div class="outer">
+        <div class="card mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-8 d-flex">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= item.title %></h5>
+                        <p class="card-text">
+                            <%= item.content.substring(0,350); %> ...
+                        </p>
+                    </div>
+                    <a
+                        href="/blogs/<%= item._id %>"
+                        class="btn btn-success align-self-end"
+                        >Read More</a
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }) %>
+</div>
+<%- include('../partials/footer.ejs') %>

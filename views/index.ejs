@@ -15,14 +15,14 @@ td {
  </style>
     <h1>index page</h1>
     <container class="grid">
-    <%blogs.forEach((blog)=> {%>
+    <%bookblogs.forEach((bookblog)=> {%>
         <div>
             <table style="border:2px solid black;">
             <tr>
-            <td><h2><%=blog.title%></h2><div style="font-size: 20px;"><%=blog.author%></div></td>
-            <td><a href="/blogs/<%=blog._id%>"><img style="max-width:200px;" src="<%=blog.image%>"></a></a></td>    
-            <td style="font-size: 20px;"><span><strong>Description: </strong><%=blog.body.substring(0, 2000)%></span>
-            <a style="border: 1px solid red; ;" href='/blogs/<%=blog._id%>'>Read more</a></td>
+            <td><h2><%=bookblog.title%></h2><div style="font-size: 20px;"><%=bookblog.author%></div></td>
+            <td><a href="/bookblogs/<%=bookblog._id%>"><img style="max-width:200px;" src="<%=bookblog.image%>"></a></a></td>    
+            <td style="font-size: 20px;"><span><strong>Description: </strong><%=bookblog.body.substring(0, 2000)%></span>
+            <a style="border: 1px solid red; ;" href='/bookblogs/<%=bookblog._id%>'>Read more</a></td>
         </tr>
             </table>
         </div>

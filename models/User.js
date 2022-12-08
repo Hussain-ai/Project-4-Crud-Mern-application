@@ -1,25 +1,11 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const passportLocalMongoose = require('passport-local-mongoose');
 
-const schema = mongoose.Schema
+const UserSchema = new mongoose.Schema({
+    username: String,
+    email: String,
+});
+UserSchema.plugin(passportLocalMongoose);
+const User = mongoose.model('User', UserSchema);
 
-
-const UserModel = new schema({
-    name: {type: String, required: true},
-    username: {type: String, required: true},
-    email: {type: String, required: true},
-    password: {type: String, required: true},
-    //Associate the tweet model
-    tweets: [{
-        type: schema.Types.ObjectId,
-        ref: 'Tweet'
-        }]
-}, {
-    timestamps: true
-})
-
-
-const User = mongoose.model('User', UserModel)
-
-module.exports = User
-
-
+module.exports = User;

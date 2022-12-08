@@ -1,0 +1,48 @@
+<%- include('../partials/header.ejs') %>
+<link rel="stylesheet" href="/stylesheets/blogs/new.css" />
+
+<h1>
+    Update <%= blog.title %>
+</h1>
+<hr />
+
+<form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
+    <div class="form-group">
+        <label for="title">Title:</label>
+        <input
+            type="text"
+            name="newBlog[title]"
+            class="form-control"
+            id="title"
+            placeholder="Title of the Blog"
+            value="<%= blog.title  %> "
+        />
+    </div>
+
+    <div class="form-group">
+        <label for="content">Content:</label>
+        <textarea
+            class="form-control"
+            placeholder="Content of the Blog"
+            name="newBlog[content]"
+        >
+<%= blog.content %></textarea
+        >
+    </div>
+    <div class="form-group">
+        <label for="image">Image URL:</label>
+        <input
+            type="text"
+            name="newBlog[image]"
+            id="image"
+            class="form-control"
+            placeholder="Enter Image URL"
+            value="<%= blog.image  %>"
+        />
+    </div>
+    <button class="btn btn-success">
+        Update Post
+    </button>
+</form>
+
+<%- include('../partials/footer.ejs') %>

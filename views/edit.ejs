@@ -9,24 +9,24 @@
 </head>
 <body>
     <div class="ui main text container segment">
-        <div class="ui huge header"> Edit <%= blog.title%></div>
-          <form action="/blogs/<%=blog._id%>?_method=PUT" method="POST" class="ui form">
+        <div class="ui huge header"> Edit <%= bookblog.title%></div>
+          <form action="/bookblogs/<%=bookblog._id%>?_method=PUT" method="POST" class="ui form">
             <div class="field">
                 <label> Title: </label>
-                <input type="text" name="blog[title]" placeholder="title" value='<%=blog.title%>'
+                <input type="text" name="bookblog[title]" placeholder="title" value='<%=bookblog.title%>'
             </div>
 
             <div class="field">
                     <label> Image: </label>
-                    <input type="text" name="blog[image]" placeholder="image" value='<%=blog.image%>'>
+                    <input type="text" name="bookblog[image]" placeholder="image" value='<%=bookblog.image%>'>
              </div>
              <div class="field">
                 <label> Author: </label>
-                <textarea name="blog[author]"><%=blog.author%>'</textarea>
+                <textarea name="bookblog[author]"><%=bookblog.author%>'</textarea>
          </div
              <div class="field">
                     <label> Description: </label>
-                    <textarea name="blog[body]"><%=blog.body%>'</textarea>
+                    <textarea name="bookblog[body]"><%=bookblog.body%>'</textarea>
              </div>
              <input type="submit" class="ui violet basic button">
           </form>
